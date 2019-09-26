@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import "mocks/mock_location.dart";
 import 'package:flutter_crash_course/models/location.dart' show Location;
 import 'package:flutter_crash_course/styles.dart' show Styles;
 
 class LocationDetail extends StatelessWidget {
-  final Location location;
+  final int locationID;
 
-  LocationDetail(this.location);
+  LocationDetail(this.locationID);
 
   @override
   Widget build(BuildContext context) {
+    var location = MockLocation.Fetch(locationID);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -19,27 +22,27 @@ class LocationDetail extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: _renderBody(context),
+        children: _renderBody(context, location),
       ),
     );
   }
 
-  List<Widget> _renderBody(BuildContext context) {
+  List<Widget> _renderBody(BuildContext context, Location location) {
     var result = List<Widget>();
-    result.add(_bannerImage(170.0));
-    result.addAll(_renderFacts());
+    result.add(_bannerImage(location, 170.0));
+    result.addAll(_renderFacts(location));
 
     return result;
   }
 
-  Widget _bannerImage(double height) {
+  Widget _bannerImage(Location location, double height) {
     return Container(
       constraints: BoxConstraints.tightFor(height: height),
       child: Image.network(location.url, fit: BoxFit.fitWidth),
     );
   }
 
-  List<Widget> _renderFacts() {
+  List<Widget> _renderFacts(Location location) {
     var result = List<Widget>();
     for (int i = 0; i < location.facts.length; i++) {
       result.add(_sectionTitle(location.facts[i].title));

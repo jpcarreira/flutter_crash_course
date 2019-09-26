@@ -32,11 +32,11 @@ class LocationList extends StatelessWidget {
     );
   }
 
-  Future _navigatoToLocationDetail(BuildContext context, int index) {
+  Future _navigatoToLocationDetail(BuildContext context, int locationID) {
     return Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => LocationDetail(locations[index]),
+          builder: (context) => LocationDetail(locationID),
         ));
   }
 

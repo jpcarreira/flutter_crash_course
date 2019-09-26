@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import "mocks/mock_location.dart";
+import 'package:flutter_crash_course/mocks/mock_location.dart';
 import 'package:flutter_crash_course/models/location.dart' show Location;
 import 'package:flutter_crash_course/styles.dart' show Styles;
 

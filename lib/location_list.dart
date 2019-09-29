@@ -61,7 +61,7 @@ class _LocationListState extends State<LocationList> {
 
   Widget _itemTitle(Location location) {
     return Text(
-      '> ${location.name}',
+      location.name,
       style: Styles.textDefault,
     );
   }

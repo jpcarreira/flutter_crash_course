@@ -3,10 +3,19 @@ import 'package:flutter_crash_course/location_detail.dart' show LocationDetail;
 import 'package:flutter_crash_course/models/location.dart' show Location;
 import 'package:flutter_crash_course/styles.dart' show Styles;
 
-class LocationList extends StatelessWidget {
-  final List<Location> locations;
+class LocationList extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _LocationListState();
+}
 
-  LocationList(this.locations);
+class _LocationListState extends State<LocationList> {
+  List<Location> locations = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +37,7 @@ class LocationList extends StatelessWidget {
       leading: _itemThumbnail(locations[index]),
       title: _itemTitle(locations[index]),
       contentPadding: EdgeInsets.all(10),
-      onTap: () => _navigatoToLocationDetail(context, index),
+      onTap: () => _navigatoToLocationDetail(context, locations[index].id),
     );
   }
 
@@ -55,5 +64,12 @@ class LocationList extends StatelessWidget {
       '> ${location.name}',
       style: Styles.textDefault,
     );
+  }
+
+  void _loadData() async {
+    final locations = await Location.fetchAll();
+    setState(() {
+      this.locations = locations;
+    });
   }
 }

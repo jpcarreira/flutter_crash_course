@@ -27,13 +27,16 @@ class _LocationListState extends State<LocationList> {
             style: Styles.navBarTitle,
           ),
         ),
-        body: Column(
-          children: [
-            _renderProgressBar(context),
-            Expanded(
-              child: _renderListView(context),
-            ),
-          ],
+        body: RefreshIndicator(
+          onRefresh: _loadData,
+          child: Column(
+            children: [
+              _renderProgressBar(context),
+              Expanded(
+                child: _renderListView(context),
+              ),
+            ],
+          ),
         ));
   }
 
@@ -88,7 +91,7 @@ class _LocationListState extends State<LocationList> {
     );
   }
 
-  void _loadData() async {
+  Future<void> _loadData() async {
     setState(() => isLoading = true);
     final locations = await Location.fetchAll();
     setState(() {
